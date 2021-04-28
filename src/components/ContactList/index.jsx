@@ -1,8 +1,9 @@
 import { createUseStyles } from "react-jss";
-import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import { useSelector, connect } from "react-redux";
+//import PropTypes from "prop-types";
 import ContactItem from "../ContactItem";
 import * as actions from "../../redux/phoneBook/actions";
+import { getContacts, getFilter } from "../../redux/phoneBook/selectors";
 
 const useStyles = createUseStyles({
   list: {
@@ -11,9 +12,6 @@ const useStyles = createUseStyles({
     padding: 10,
   },
 });
-
-const getContacts = (state) => state.contacts.items;
-const getFilter = (state) => state.contacts.filter;
 
 const ContactList = ({ onDelete }) => {
   const classes = useStyles();
@@ -36,8 +34,14 @@ const ContactList = ({ onDelete }) => {
   );
 };
 
-ContactList.propTypes = {
-  contacts: PropTypes.array,
-};
+// ContactList.propTypes = {
+//   contacts: PropTypes.array,
+// };
 
+// const mapStateToProps = (state) => ({
+//   items: state.contacts.items,
+//   filter: state.contacts.filter,
+// });
+
+// export default connect(mapStateToProps, actions)(ContactList);
 export default ContactList;
