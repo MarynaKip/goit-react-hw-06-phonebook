@@ -2,7 +2,7 @@ import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import Contacts from "./components/Contacts";
 import ContactList from "./components/ContactList";
-import { onUpdate } from "./redux/phoneBook/actions";
+import { onUpdate } from "./redux/phoneBook/reducer";
 import { getFilter } from "./redux/phoneBook/selectors";
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
 
   const handleChange = (e) => {
     const filter = e.target.value;
-    console.log(filter);
+
     handleFilter(filter);
   };
 

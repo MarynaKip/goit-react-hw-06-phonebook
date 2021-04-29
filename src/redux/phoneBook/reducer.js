@@ -1,5 +1,4 @@
-import { combineReducers } from "redux";
-import types from "./types";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   contacts: {
@@ -14,29 +13,24 @@ const initialState = {
   },
 };
 
-const items = (state = initialState.contacts.items, action) => {
-  const { type, payload } = action;
-  switch (type) {
-    case types.SAVE:
-      return [...state, payload];
+const { actions, reducer } = createSlice({
+  name: "phoneBook/toolkit/slice",
+  initialState,
+  reducers: {
+    onSave: (state, action) => {
+      state.contacts.items = [...state.contacts.items, action.payload];
+    },
+    onDelete: (state, action) => {
+      state.contacts.items = [
+        ...state.contacts.items.filter(({ id }) => action.payload !== id),
+      ];
+    },
+    onUpdate: (state, action) => {
+      state.contacts.filter = action.payload;
+    },
+  },
+});
 
-    case types.DELETE:
-      return [...state.filter(({ id }) => payload !== id)];
+export const { onSave, onDelete, onUpdate } = actions;
 
-    default:
-      return state;
-  }
-};
-
-const filter = (state = initialState.contacts.filter, action) => {
-  const { payload } = action;
-  switch (action.type) {
-    case types.UPDATE_FILTER:
-      return payload;
-
-    default:
-      return state;
-  }
-};
-
-export default combineReducers({ items, filter });
+export default reducer;

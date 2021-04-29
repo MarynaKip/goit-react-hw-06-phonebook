@@ -1,6 +1,6 @@
 import { createUseStyles } from "react-jss";
 import { useSelector, useDispatch } from "react-redux";
-import { onDelete } from "../../redux/phoneBook/actions";
+import { onDelete } from "../../redux/phoneBook/reducer";
 import { getContact } from "../../redux/phoneBook/selectors";
 
 const useStyles = createUseStyles({

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import { v4 as uuidv4 } from "uuid";
-import { onSave } from "../../redux/phoneBook/actions";
+import { onSave } from "../../redux/phoneBook/reducer";
 import { getContacts } from "../../redux/phoneBook/selectors";
 
 const initialState = {
