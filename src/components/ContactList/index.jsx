@@ -1,9 +1,7 @@
 import { createUseStyles } from "react-jss";
-import { useSelector, connect } from "react-redux";
-//import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import ContactItem from "../ContactItem";
-import * as actions from "../../redux/phoneBook/actions";
-import { getContacts, getFilter } from "../../redux/phoneBook/selectors";
+import { getVisibleContacts } from "../../redux/phoneBook/selectors";
 
 const useStyles = createUseStyles({
   list: {
@@ -13,35 +11,18 @@ const useStyles = createUseStyles({
   },
 });
 
-const ContactList = ({ onDelete }) => {
+const ContactList = () => {
   const classes = useStyles();
 
-  const contacts = useSelector(getContacts); //from redux
-  const filter = useSelector(getFilter); //from redux
-
-  const contactsArr = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
-  const handleDeleteItem = (e) => onDelete(e.target.value);
+  const visibleContacts = useSelector(getVisibleContacts); //from redux
 
   return (
     <ul className={classes.list}>
-      {contactsArr.map((contact) => (
-        <ContactItem contact={contact} onClick={onDelete} />
+      {visibleContacts.map((contact) => (
+        <ContactItem contactID={contact.id} />
       ))}
     </ul>
   );
 };
 
-// ContactList.propTypes = {
-//   contacts: PropTypes.array,
-// };
-
-// const mapStateToProps = (state) => ({
-//   items: state.contacts.items,
-//   filter: state.contacts.filter,
-// });
-
-// export default connect(mapStateToProps, actions)(ContactList);
 export default ContactList;

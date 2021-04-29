@@ -1,40 +1,27 @@
 import "./App.css";
-import { useState, useEffect } from "react";
-import { useAlert } from "react-alert";
+import { useSelector, useDispatch } from "react-redux";
 import Contacts from "./components/Contacts";
 import ContactList from "./components/ContactList";
-import * as actions from "./redux/phoneBook/actions";
+import { onUpdate } from "./redux/phoneBook/actions";
+import { getFilter } from "./redux/phoneBook/selectors";
 
-const App = ({ onUpdate }) => {
-  const alert = useAlert();
+const App = () => {
+  const dispatch = useDispatch();
 
-  const filter = ""; //from redux
-  // const [contacts, setContacts] = useState([]);
-  // const [filter, setFilter] = useState("");
+  const filter = useSelector(getFilter); //from redux
 
-  // useEffect(() => {
-  //   const storageContacts = localStorage.getItem("contacts");
-  //   setContacts(JSON.parse(storageContacts));
-  // }, []);
+  const handleFilter = (filterText) => dispatch(onUpdate(filterText));
 
-  // useEffect(() => {
-  //   localStorage.setItem("contacts", JSON.stringify(contacts));
-  // });
-
-  const handleFilter = (e) => onUpdate(e.target.value);
-
-  // const handleAddContact = (newContact) => {
-  //   if (contacts.some((contact) => contact.name === newContact.name)) {
-  //     alert.show(`Contact is already in contscts.`);
-  //     return;
-  //   }
-  //   setContacts((prevState) => [...prevState, newContact]);
-  // };
+  const handleChange = (e) => {
+    const filter = e.target.value;
+    console.log(filter);
+    handleFilter(filter);
+  };
 
   return (
     <>
       <span>Find:</span>
-      <input type="text" value={filter} name="filter" onChange={handleFilter} />
+      <input type="text" value={filter} name="filter" onChange={handleChange} />
 
       <Contacts />
 

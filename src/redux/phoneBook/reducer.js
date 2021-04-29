@@ -5,9 +5,9 @@ const initialState = {
   contacts: {
     items: [
       {
-        id: null,
-        name: null,
-        number: null,
+        id: 1,
+        name: "aaasssddd",
+        number: 3806778965412,
       },
     ],
     filter: "",
@@ -18,10 +18,6 @@ const items = (state = initialState.contacts.items, action) => {
   const { type, payload } = action;
   switch (type) {
     case types.SAVE:
-      //   if (state.some((contact) => contact.name === payload.name)) {
-      //     alert.show(`Contact is already in contscts.`);
-      //     return;
-      //   }
       return [...state, payload];
 
     case types.DELETE:

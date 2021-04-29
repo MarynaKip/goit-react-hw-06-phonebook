@@ -1,6 +1,7 @@
-import PropTypes from "prop-types";
 import { createUseStyles } from "react-jss";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { onDelete } from "../../redux/phoneBook/actions";
+import { getContact } from "../../redux/phoneBook/selectors";
 
 const useStyles = createUseStyles({
   item: {
@@ -10,27 +11,24 @@ const useStyles = createUseStyles({
   },
 });
 
-const ContactItem = ({ onClick }) => {
+const ContactItem = ({ contactID }) => {
   const classes = useStyles();
-  const contact = ""; //from redux
+  const dispatch = useDispatch();
+
+  const contact = useSelector(getContact(contactID)); //from redux
+  const { name, id, number } = contact;
+
+  const handleDeleteItem = () => dispatch(onDelete(id));
+
   return (
-    <li key={contact.id} className={classes.item}>
-      {contact.name}
-      {contact.number}
-      <button id={contact.id} type="button" onClick={onClick}>
+    <li key={id} className={classes.item}>
+      {name}
+      {number}
+      <button id={id} type="button" onClick={handleDeleteItem}>
         Delete
       </button>
     </li>
   );
-};
-
-ContactItem.propTypes = {
-  contact: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    number: PropTypes.number.isRequired,
-  }),
-  onClick: PropTypes.func.isRequired,
 };
 
 export default ContactItem;

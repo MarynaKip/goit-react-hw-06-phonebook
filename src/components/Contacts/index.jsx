@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useAlert } from "react-alert";
 import { v4 as uuidv4 } from "uuid";
-import * as actions from "../../redux/phoneBook/actions";
+import { onSave } from "../../redux/phoneBook/actions";
+import { getContacts } from "../../redux/phoneBook/selectors";
 
 const initialState = {
   id: "",
@@ -9,10 +12,16 @@ const initialState = {
   number: "",
 };
 
-const Contacts = ({ onSave }) => {
-  const [state, setState] = useState(initialState);
+const Contacts = () => {
+  const alert = useAlert();
+  const dispatch = useDispatch();
 
+  const [state, setState] = useState(initialState);
   const { name, number } = state;
+
+  const contacts = useSelector(getContacts);
+
+  const handleSaveItem = (item) => dispatch(onSave(item));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +32,12 @@ const Contacts = ({ onSave }) => {
       number: Number(number),
     };
 
-    onSave(newItem);
+    if (contacts.some((contact) => contact.name === newItem.name)) {
+      alert.show(`Contact is already in contscts.`);
+      return;
+    }
+
+    handleSaveItem(newItem);
   };
 
   const handleChange = (e) => {
